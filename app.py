@@ -8,12 +8,31 @@ import docx
 import PyPDF2
 import pandas as pd
 
-# Optional: pptx support
+# -----------------------------
+# Optional Packages
+# -----------------------------
+try:
+    import docx
+    docx_available = True
+except ImportError:
+    docx_available = False
+    st.warning("python-docx not installed. DOCX files will not be supported.")
+
 try:
     from pptx import Presentation
     pptx_available = True
 except ImportError:
     pptx_available = False
+    st.warning("python-pptx not installed. PPTX files will not be supported.")
+
+# -----------------------------
+# Session State
+# -----------------------------
+if "notes" not in st.session_state:
+    st.session_state.notes = {}
+if "refresh_notes" not in st.session_state:
+    st.session_state.refresh_notes = False
+
 
 # -----------------------------
 # Session State
