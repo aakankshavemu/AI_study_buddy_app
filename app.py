@@ -226,10 +226,7 @@ for idx, tab in enumerate(tabs):
                         q = parts[0].strip()
                         a = parts[1].strip() if len(parts) > 1 else "Answer not provided."
 
-                        # Append source numbers if available
-                        if sources and q_idx <= len(sources):
-                            a += f" [{q_idx}]"
-
+                        
                         st.markdown(
                             f"""
                             <div style='
@@ -245,10 +242,7 @@ for idx, tab in enumerate(tabs):
                             unsafe_allow_html=True
                         )
 
-                    if sources:
-                        st.markdown("### 🔗 Sources")
-                        for idx_src, src in enumerate(sources, start=1):
-                            st.markdown(f"{idx_src}. [{src}]({src})")
+                    
 
                 # --- Flashcards ---
                 elif task_name=="Flashcards":
