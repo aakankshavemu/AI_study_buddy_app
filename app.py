@@ -242,7 +242,44 @@ for idx, tab in enumerate(tabs):
                             unsafe_allow_html=True
                         )
 
-                    
+                    # --- Quiz with sources and styled answers ---
+                elif task_name == "Quiz":
+                # Split AI output into individual quiz items using regex
+                    quiz_items = re.split(r'\n(?=Q\d*:|Q\d+\.|Question \d+:)', ai_output)
+
+                    for q_idx, item in enumerate(quiz_items, start=1):
+                        if not item.strip():
+                            continue
+
+                        # Extract question and answer
+                        if "Answer:" in item:
+                            parts = item.split("Answer:", 1)
+                        elif "A:" in item:
+                            parts = item.split("A:", 1)
+                        else:
+                            # If format is unexpected, split by first newline
+                            parts = item.strip().split("\n", 1)
+
+                        question = parts[0].strip()
+                        answer = parts[1].strip() if len(parts) > 1 else "Answer not provided."
+
+                        # Display question and answer in a card with styling
+                        st.markdown(
+                            f"""
+                            <div style='
+                                border-left:4px solid #4a90e2; 
+                                padding:15px; 
+                                margin-bottom:12px;
+                                border-radius:6px;
+                                background-color:#f9f9f9;
+                            '>
+                                <div style='font-weight:bold; font-size:16px;'>❓ Q{q_idx}: {question}</div>
+                                <div style='margin-top:8px; font-size:15px;'>💡 Answer: {answer}</div>
+                            </div>
+                            """,
+                            unsafe_allow_html=True
+                            )
+
 
                 # --- Flashcards ---
                 elif task_name=="Flashcards":
